@@ -51,7 +51,14 @@ const Menu: React.FC = () => {
           })}
         </IonList>
         <IonList id="secondary-menu-list">
-          <IonItem button lines="none">
+          <IonItem
+            button
+            lines="none"
+            onClick={() => {
+              sessionStorage.removeItem('mock-user-sign-in');
+              window.location.reload();
+            }}
+          >
             <IonIcon slot="start" ios={logOutOutline} md={logOutSharp} />
             <IonLabel>Sign Out</IonLabel>
           </IonItem>

@@ -22,19 +22,42 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import UserSignInOrUp, { UserSignMode } from './pages/UserSignInOrUp';
 
 const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <Menu />
+          {
+            sessionStorage.getItem('mock-user-sign-in') ?
+              <Menu /> :
+              <></>
+          }
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/home" />
             </Route>
             <Route path="/home" exact={true}>
-              <Home />
+              {
+                sessionStorage.getItem('mock-user-sign-in') ?
+                  <Home /> :
+                  <Redirect to="/sign-in" />
+              }
+            </Route>
+            <Route path="/sign-in" exact={true}>
+              {
+                sessionStorage.getItem('mock-user-sign-in') ?
+                  <Redirect to="/home" /> :
+                  <UserSignInOrUp signMode={UserSignMode.In} />
+              }
+            </Route>
+            <Route path="/sign-up" exact={true}>
+              {
+                sessionStorage.getItem('mock-user-sign-in') ?
+                  <Redirect to="/home" /> :
+                  <UserSignInOrUp signMode={UserSignMode.Up} />
+              }
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
