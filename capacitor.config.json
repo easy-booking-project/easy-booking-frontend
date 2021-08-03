@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "easy-booking-frontend",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

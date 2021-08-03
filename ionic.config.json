@@ -1,0 +1,7 @@
+{
+  "name": "easy-booking-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
