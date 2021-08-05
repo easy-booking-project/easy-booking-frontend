@@ -18,7 +18,8 @@ module.exports = {
             'ignore': [
                 'after-comment'
             ]
-        }]
+        }],
+        'color-hex-length': 'long'
     },
     ignoreFiles: ['node_modules/**/*', 'build/**/*'],
 };
