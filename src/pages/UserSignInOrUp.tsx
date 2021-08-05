@@ -1,3 +1,4 @@
+import { TextFieldTypes } from "@ionic/core";
 import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton } from "@ionic/react";
 
 import styles from './UserSignInOrUp.module.css';
@@ -6,6 +7,21 @@ export enum UserSignMode {
   In,
   Up
 }
+
+const inputDefinitions = [
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    required: true
+  },
+];
 
 const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }) => {
   return (
@@ -16,14 +32,15 @@ const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }) => {
             <IonCardTitle>{signMode === UserSignMode.In ? 'Sign into your account' : 'Create your account'}</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <IonItem>
-              <IonLabel position="floating">Username</IonLabel>
-              <IonInput type="text"></IonInput>
-            </IonItem>
-            <IonItem>
-              <IonLabel position="floating">Password</IonLabel>
-              <IonInput type="password"></IonInput>
-            </IonItem>
+            {/* TODO use a form */}
+            {
+              inputDefinitions.map(inputDefinition => (
+                <IonItem key={inputDefinition.name}>
+                  <IonLabel position="floating">{inputDefinition.label}</IonLabel>
+                  <IonInput type={inputDefinition.type as TextFieldTypes} required={inputDefinition.required}></IonInput>
+                </IonItem>
+              ))
+            }
             <IonButton
               expand="block"
               onClick={() => {
