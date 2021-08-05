@@ -46,7 +46,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npm run lint-eslint && npm run lint-stylelint",
+    "lint-eslint": "eslint -c .eslintrc.js --ext .ts,.tsx,.js src",
+    "lint-stylelint": "stylelint --config .stylelintrc.js src/**/*.{less,css,scss}"
   },
   "eslintConfig": {
     "extends": [
@@ -69,7 +72,12 @@
   "devDependencies": {
     "@capacitor/cli": "3.1.2",
     "@ionic/cli": "^6.16.3",
-    "@ionic/lab": "3.2.10"
+    "@ionic/lab": "3.2.10",
+    "stylelint": "^13.13.1",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.4.0",
+    "stylelint-order": "^4.1.0"
   },
   "description": "An Ionic project"
 }
