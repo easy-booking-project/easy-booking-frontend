@@ -1,5 +1,6 @@
 .input-card {
     position: absolute;
+    margin: 0;
     width: 300px;
     max-width: 100%;
     top: 50%;
