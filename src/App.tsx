@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from 'react';
+
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Home from './pages/Home';
 import UserSignInOrUp, { UserSignMode } from './pages/UserSignInOrUp';
-import { useEffect, useState } from 'react';
 import { fetchUser } from './utils/auth';
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,7 +28,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const App: React.FC = () => {
-  const [routerContent, setRouterContent] = useState<any>();
+  const [routerContent, setRouterContent] = useState<JSX.Element>();
 
   useEffect(() => {
     async function generateRouterOutlet() {
@@ -38,20 +39,20 @@ const App: React.FC = () => {
             hasSignedIn ? <Menu /> : <></>
           }
           <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
+            <Route path="/" exact>
               <Redirect to="/home" />
             </Route>
-            <Route path="/home" exact={true}>
+            <Route path="/home" exact>
               {
                 hasSignedIn ? <Home /> : <Redirect to="/sign-in" />
               }
             </Route>
-            <Route path="/sign-in" exact={true}>
+            <Route path="/sign-in" exact>
               {
                 hasSignedIn ? <Redirect to="/home" /> : <UserSignInOrUp signMode={UserSignMode.In} />
               }
             </Route>
-            <Route path="/sign-up" exact={true}>
+            <Route path="/sign-up" exact>
               {
                 hasSignedIn ? <Redirect to="/home" /> : <UserSignInOrUp signMode={UserSignMode.Up} />
               }

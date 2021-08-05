@@ -1,7 +1,9 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { TextFieldTypes } from "@ionic/core";
 import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, useIonAlert, AlertButton, AlertOptions } from "@ionic/react";
+// eslint-disable-next-line import/no-unresolved
 import { HookOverlayOptions } from "@ionic/react/dist/types/hooks/HookOverlayOptions";
-import { useState } from "react";
+import React, { useState } from "react";
 import { signIn as authSignIn, signUp as authSignUp } from "../utils/auth";
 import { UserSignInInfo, UserSignUpInfo } from "../utils/user";
 
@@ -9,7 +11,7 @@ import styles from './UserSignInOrUp.module.css';
 
 export enum UserSignMode {
   In,
-  Up
+  Up,
 }
 
 const signInInputDefinitions = [
@@ -23,7 +25,7 @@ const signInInputDefinitions = [
     name: 'password',
     label: 'Password',
     type: 'password',
-    required: true
+    required: true,
   },
 ];
 
@@ -38,11 +40,11 @@ const signUpInputDefinitions = [
     name: 'password',
     label: 'Password',
     type: 'password',
-    required: true
+    required: true,
   },
 ];
 
-const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }) => {
+const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }: { signMode: UserSignMode }) => {
   const [userInfo, setUserInfo] = useState<Partial<UserSignInInfo | UserSignUpInfo>>({});
   const [presentAlert] = useIonAlert();
 
@@ -53,12 +55,18 @@ const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }) => {
       <IonContent fullscreen>
         <IonCard className={styles['input-card']}>
           <IonCardHeader>
-            <IonCardTitle>{signMode === UserSignMode.In ? 'Sign into your account' : 'Create your account'}</IonCardTitle>
+            <IonCardTitle>
+              {signMode === UserSignMode.In ? 'Sign into your account' : 'Create your account'}
+            </IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
             <form onSubmit={async event => {
               event.preventDefault();
-              signMode === UserSignMode.In ? signIn(userInfo, presentAlert, setUserInfo) : signUp(userInfo, presentAlert, setUserInfo);
+              if (signMode === UserSignMode.In) {
+                signIn(userInfo, presentAlert, setUserInfo);
+              } else {
+                signUp(userInfo, presentAlert, setUserInfo);
+              }
             }}>
               {
                 inputDefinitions.map(inputDefinition => (
@@ -68,11 +76,16 @@ const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }) => {
                       type={inputDefinition.type as TextFieldTypes}
                       required={inputDefinition.required}
                       onIonChange={
-                        async ({ detail }) => inputDefinition.name === 'password' ?
-                          userInfo.authenticationHash = await digestText(detail.value?.toString()) :
-                          (userInfo as any)[inputDefinition.name] = detail.value
+                        async ({ detail }) => {
+                          if (inputDefinition.name === 'password') {
+                            userInfo.authenticationHash = await digestText(detail.value?.toString());
+                          } else {
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            (userInfo as any)[inputDefinition.name] = detail.value;
+                          }
+                        }
                       }
-                    ></IonInput>
+                    />
                   </IonItem>
                 ))
               }
@@ -128,6 +141,7 @@ async function digestText(text?: string) {
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex;
   }
+  return undefined;
 }
 
 export default UserSignInOrUp;

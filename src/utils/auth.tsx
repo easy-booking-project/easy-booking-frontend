@@ -2,9 +2,9 @@ import ServerInfo from "./server-info";
 import { User, UserSignInInfo, UserSignUpInfo } from "./user";
 
 export async function fetchUser() {
-  let response = await fetch(
+  const response = await fetch(
     `${ServerInfo.SERVER_BASE_URL}/user/fetch`,
-    { credentials: 'include' }
+    { credentials: 'include' },
   );
   let user: User | undefined;
   if (response.ok) {
@@ -21,10 +21,10 @@ export async function signIn(userInfo: UserSignInInfo) {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
-      body: JSON.stringify(userInfo)
-    }
+      body: JSON.stringify(userInfo),
+    },
   );
   return response.ok;
 }
@@ -36,10 +36,10 @@ export async function signUp(userInfo: UserSignUpInfo) {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
-      body: JSON.stringify(userInfo)
-    }
+      body: JSON.stringify(userInfo),
+    },
   );
   return response.ok;
 }
@@ -49,8 +49,8 @@ export async function signOut() {
     `${ServerInfo.SERVER_BASE_URL}/authentication/sign-out`,
     {
       method: 'POST',
-      credentials: 'include'
-    }
+      credentials: 'include',
+    },
   );
   window.location.reload();
 }
