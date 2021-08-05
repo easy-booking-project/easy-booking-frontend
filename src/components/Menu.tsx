@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   IonContent,
   IonIcon,
@@ -26,8 +28,8 @@ const appPages: AppPage[] = [
     title: 'Home',
     url: '/home',
     iosIcon: homeOutline,
-    mdIcon: homeSharp
-  }
+    mdIcon: homeSharp,
+  },
 ];
 
 const Menu: React.FC = () => {
@@ -40,9 +42,17 @@ const Menu: React.FC = () => {
           <IonListHeader>Username</IonListHeader>
           <IonNote>User Role</IonNote>
           {appPages.map((appPage, index) => {
+            const toggleKey = `ion-menu-toggle-${index}`;
+
             return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
+              <IonMenuToggle key={toggleKey} autoHide={false}>
+                <IonItem
+                  className={location.pathname === appPage.url ? 'selected' : ''}
+                  routerLink={appPage.url}
+                  routerDirection="none"
+                  lines="none"
+                  detail={false}
+                >
                   <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>
