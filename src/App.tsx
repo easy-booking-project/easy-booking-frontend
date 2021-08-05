@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
@@ -35,24 +37,24 @@ const App: React.FC = () => {
               <></>
           }
           <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
+            <Route path="/" exact>
               <Redirect to="/home" />
             </Route>
-            <Route path="/home" exact={true}>
+            <Route path="/home" exact>
               {
                 sessionStorage.getItem('mock-user-sign-in') ?
                   <Home /> :
                   <Redirect to="/sign-in" />
               }
             </Route>
-            <Route path="/sign-in" exact={true}>
+            <Route path="/sign-in" exact>
               {
                 sessionStorage.getItem('mock-user-sign-in') ?
                   <Redirect to="/home" /> :
                   <UserSignInOrUp signMode={UserSignMode.In} />
               }
             </Route>
-            <Route path="/sign-up" exact={true}>
+            <Route path="/sign-up" exact>
               {
                 sessionStorage.getItem('mock-user-sign-in') ?
                   <Redirect to="/home" /> :

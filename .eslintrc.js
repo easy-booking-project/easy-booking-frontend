@@ -30,6 +30,8 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint'],
     rules: {
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
         'arrow-body-style': 0,
         'no-var': 'error',
