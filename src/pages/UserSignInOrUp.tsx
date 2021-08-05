@@ -32,28 +32,29 @@ const UserSignInOrUp: React.FC<{ signMode: UserSignMode }> = ({ signMode }) => {
             <IonCardTitle>{signMode === UserSignMode.In ? 'Sign into your account' : 'Create your account'}</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            {/* TODO use a form */}
-            {
-              inputDefinitions.map(inputDefinition => (
-                <IonItem key={inputDefinition.name}>
-                  <IonLabel position="floating">{inputDefinition.label}</IonLabel>
-                  <IonInput type={inputDefinition.type as TextFieldTypes} required={inputDefinition.required}></IonInput>
-                </IonItem>
-              ))
-            }
-            <IonButton
-              expand="block"
-              onClick={() => {
-                sessionStorage.setItem('mock-user-sign-in', 'Someone');
-                window.location.reload();
-              }}
-            >{signMode === UserSignMode.In ? 'Sign In' : 'Sign Up'}</IonButton>
-            <IonButton
-              expand="block"
-              fill="outline"
-              routerLink={signMode === UserSignMode.In ? '/sign-up' : '/sign-in'}
-              routerDirection={signMode === UserSignMode.In ? 'forward' : 'back'}
-            >{signMode === UserSignMode.In ? 'Sign Up' : 'Sign In'}</IonButton>
+            <form onSubmit={() => {
+              sessionStorage.setItem('mock-user-sign-in', 'Someone');
+              window.location.reload();
+            }}>
+              {
+                inputDefinitions.map(inputDefinition => (
+                  <IonItem key={inputDefinition.name}>
+                    <IonLabel position="floating">{inputDefinition.label}</IonLabel>
+                    <IonInput type={inputDefinition.type as TextFieldTypes} required={inputDefinition.required}></IonInput>
+                  </IonItem>
+                ))
+              }
+              <IonButton
+                type="submit"
+                expand="block"
+              >{signMode === UserSignMode.In ? 'Sign In' : 'Sign Up'}</IonButton>
+              <IonButton
+                expand="block"
+                fill="outline"
+                routerLink={signMode === UserSignMode.In ? '/sign-up' : '/sign-in'}
+                routerDirection={signMode === UserSignMode.In ? 'forward' : 'back'}
+              >{signMode === UserSignMode.In ? 'Sign Up' : 'Sign In'}</IonButton>
+            </form>
           </IonCardContent>
         </IonCard>
       </IonContent>
