@@ -8,7 +8,17 @@ module.exports = {
         'function-name-case': 'lower',
         'no-descending-specificity': null,
         'no-invalid-double-slash-comments': null,
-        'rule-empty-line-before': 'always',
+        'rule-empty-line-before': ['always', {
+            'except': [
+                'after-single-line-comment'
+            ]
+        }],
+        'custom-property-empty-line-before': ['always', {
+            'except': ['after-custom-property', 'first-nested'],
+            'ignore': [
+                'after-comment'
+            ]
+        }]
     },
     ignoreFiles: ['node_modules/**/*', 'build/**/*'],
 };
