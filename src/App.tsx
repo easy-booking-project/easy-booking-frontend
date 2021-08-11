@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Home from './pages/Home';
+import UserSignInOrUp, { UserSignMode } from './pages/UserSignInOrUp';
+import { fetchUser } from './utils/auth';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,17 +26,17 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import UserSignInOrUp, { UserSignMode } from './pages/UserSignInOrUp';
 
 const App: React.FC = () => {
-  return (
-    <IonApp>
-      <IonReactRouter>
+  const [routerContent, setRouterContent] = useState<JSX.Element>();
+
+  useEffect(() => {
+    async function generateRouterOutlet() {
+      const hasSignedIn = await fetchUser();
+      setRouterContent((
         <IonSplitPane contentId="main">
           {
-            sessionStorage.getItem('mock-user-sign-in') ?
-              <Menu /> :
-              <></>
+            hasSignedIn ? <Menu /> : <></>
           }
           <IonRouterOutlet id="main">
             <Route path="/" exact>
@@ -42,27 +44,30 @@ const App: React.FC = () => {
             </Route>
             <Route path="/home" exact>
               {
-                sessionStorage.getItem('mock-user-sign-in') ?
-                  <Home /> :
-                  <Redirect to="/sign-in" />
+                hasSignedIn ? <Home /> : <Redirect to="/sign-in" />
               }
             </Route>
             <Route path="/sign-in" exact>
               {
-                sessionStorage.getItem('mock-user-sign-in') ?
-                  <Redirect to="/home" /> :
-                  <UserSignInOrUp signMode={UserSignMode.In} />
+                hasSignedIn ? <Redirect to="/home" /> : <UserSignInOrUp signMode={UserSignMode.In} />
               }
             </Route>
             <Route path="/sign-up" exact>
               {
-                sessionStorage.getItem('mock-user-sign-in') ?
-                  <Redirect to="/home" /> :
-                  <UserSignInOrUp signMode={UserSignMode.Up} />
+                hasSignedIn ? <Redirect to="/home" /> : <UserSignInOrUp signMode={UserSignMode.Up} />
               }
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
+      ));
+    }
+    generateRouterOutlet();
+  }, []);
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        {routerContent}
       </IonReactRouter>
     </IonApp>
   );
