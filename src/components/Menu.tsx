@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import { homeOutline, homeSharp, logOutOutline, logOutSharp } from 'ionicons/icons';
 
 import './Menu.css';
+import { signOut } from '../utils/auth';
 
 interface AppPage {
   url: string;
@@ -64,8 +65,8 @@ const Menu: React.FC = () => {
           <IonItem
             button
             lines="none"
-            onClick={() => {
-              sessionStorage.removeItem('mock-user-sign-in');
+            onClick={async () => {
+              await signOut();
               window.location.reload();
             }}
           >
