@@ -17,8 +17,8 @@ import Calendar from '@toast-ui/react-calendar';
 import 'tui-calendar/dist/tui-calendar.css';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
-
 import styles from './Home.module.css';
+import calendarTheme from '../theme/calendar';
 
 const Home: React.FC = () => {
   const [calendarView, setCalendarView] = useState('week');
@@ -61,8 +61,13 @@ const Home: React.FC = () => {
       </IonHeader>
 
       <IonContent scrollY={false}>
-        <IonCard className={styles['calender-container']} ref={(el) => resizeObserver.observe(el as HTMLIonCardElement)}>
-          {isShowingCalendar && <Calendar height="100%" view={calendarView} useDetailPopup useCreationPopup />}
+        <IonCard
+          className={styles['calender-container']}
+          ref={(el) => resizeObserver.observe(el as HTMLIonCardElement)}
+        >
+          {isShowingCalendar && (
+            <Calendar height="100%" view={calendarView} theme={calendarTheme} useDetailPopup useCreationPopup />
+          )}
         </IonCard>
       </IonContent>
     </IonPage>
