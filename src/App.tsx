@@ -34,7 +34,7 @@ const App: React.FC = () => {
     async function generateRouterOutlet() {
       const hasSignedIn = await fetchUser();
       setRouterContent((
-        <IonSplitPane contentId="main">
+        <>
           {
             hasSignedIn ? <Menu /> : <></>
           }
@@ -58,7 +58,7 @@ const App: React.FC = () => {
               }
             </Route>
           </IonRouterOutlet>
-        </IonSplitPane>
+        </>
       ));
     }
     generateRouterOutlet();
