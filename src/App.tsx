@@ -5,6 +5,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Home from './pages/Home';
+import Explore from './pages/Explore';
 import UserSignInOrUp, { UserSignMode } from './pages/UserSignInOrUp';
 import { fetchUser } from './utils/auth';
 
@@ -45,6 +46,11 @@ const App: React.FC = () => {
             <Route path="/home" exact>
               {
                 hasSignedIn ? <Home /> : <Redirect to="/sign-in" />
+              }
+            </Route>
+            <Route path="/explore" exact>
+              {
+                hasSignedIn ? <Explore /> : <Redirect to="/sign-in" />
               }
             </Route>
             <Route path="/sign-in" exact>

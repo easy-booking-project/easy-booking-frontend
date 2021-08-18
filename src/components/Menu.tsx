@@ -31,6 +31,12 @@ const appPages: AppPage[] = [
     iosIcon: homeOutline,
     mdIcon: homeSharp,
   },
+  {
+    title: 'Explore',
+    url: '/explore',
+    iosIcon: homeOutline,
+    mdIcon: homeSharp,
+  },
 ];
 
 const Menu: React.FC = () => {
